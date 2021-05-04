@@ -1,14 +1,43 @@
 import React from 'react';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 
-import store from './redux/store';
+import {getListPost as getListPostAction} from './action';
 
-function App(props) {
-  return (
-    <Provider store={store}>
+class App extends React.Component {
+  render() {
+    const {posts, load} = this.props.posts;
 
-    </Provider>
-  );
+    if(load) {
+      return (
+        <h1>Data is loading from API...</h1>
+      )
+    }
+    return (
+      <>
+        <h1>List Post</h1>
+        <table>
+          <tbody>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+            </tr>
+            {
+              posts.map((post) => (
+                <tr>
+                  <th>{post.id}</th>
+                  <th>{post.title}</th>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </>
+    );
+  }
+
+  componentDidMount() {
+    this.props.getListPost();
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -17,7 +46,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-// const mapDispatchToProps = () => {
-
-// }
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getListPost: (params) => dispatch(getListPostAction(params)),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -14,10 +14,11 @@ const postsReducer = (state = INITIAL_STATE, action) => {
         load: true,
       };
     case GET_LIST_POST_SUCCESS:
+      const {data} = action.payload;
       return {
         ...state,
-        posts: action.payload,
-        load: true,
+        posts: data,
+        load: false,
       };
     default:
       return state;
