@@ -1,54 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { Switch, BrowserRouter } from 'react-router-dom';
 
-import {getListPost as getListPostAction} from './action';
-
+import PublicRoute from './component/PublicRoute';
 class App extends React.Component {
   render() {
-    const {posts, load} = this.props.posts;
-
-    if(load) {
-      return (
-        <h1>Data is loading from API...</h1>
-      )
-    }
     return (
-      <>
-        <h1>List Post</h1>
-        <table>
-          <tbody>
-            <tr>
-              <th>Id</th>
-              <th>Title</th>
-            </tr>
-            {
-              posts.map((post) => (
-                <tr>
-                  <th>{post.id}</th>
-                  <th>{post.title}</th>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </>
+      <BrowserRouter>
+        <Switch>
+            <PublicRoute component={(props) => (<h1>Home page</h1>)} exact path="/" />
+            <PublicRoute component={(props) => (<h1>test page</h1>)} exact path="/test" />
+        </Switch>
+      </BrowserRouter>
     );
   }
-
-  componentDidMount() {
-    this.props.getListPost();
-  }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getListPost: (params) => dispatch(getListPostAction(params)),
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
