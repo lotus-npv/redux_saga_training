@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import {getPostData} from './postsAPI';
+import {getPostData} from '../postsAPI';
 import {getListPostSuccess} from './action';
 
 function* getListPostSaga(action) {

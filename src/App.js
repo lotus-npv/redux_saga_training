@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {getListPost as getListPostAction} from './action';
+import {getListPost as getListPostAction} from './redux/action';
 
 class App extends React.Component {
   render() {
